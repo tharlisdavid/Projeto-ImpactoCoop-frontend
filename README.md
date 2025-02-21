@@ -1,4 +1,4 @@
-# Iniciativa ImpactoCoop (project-impactocoop)
+#                   Iniciativa ImpactoCoop
 
 O ImpactoCoop é um projeto que fortalece e digitaliza cooperativas, oferecendo soluções tecnológicas para otimizar gestão, transparência e crescimento sustentável.
 
