@@ -2,6 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:5000",
+  withCredentials: true, // Permite envio de cookies/tokens entre frontend e backend
 });
 
 export default api;

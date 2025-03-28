@@ -1,68 +1,38 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { login } from "../services/authService";
-import { useNavigate, useLocation } from "react-router-dom";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 interface AuthContextType {
   user: any;
-  signIn: (email: string, password: string) => Promise<void>;
-  signOut: () => void;
-  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<any>(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState(null);
 
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    console.log("🔄 Restaurando usuário do localStorage...");
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false); // 🔥 Agora garantimos que o usuário só será verificado depois do carregamento
-  }, []);
-
-  const signIn = async (email: string, password: string) => {
-    console.log("🟢 Tentando fazer login...");
-
-    const response = await login(email, password);
-    console.log("✅ Login bem-sucedido:", response);
-
-    localStorage.setItem("token", response.token);
-    setUser({ email });
-    localStorage.setItem("user", JSON.stringify({ email }));
-
-    // 🔄 Redirecionamento correto após login
-    const from = location.state?.from?.pathname || "/users";
-    console.log("➡️ Redirecionando para:", from);
-
-    navigate(from, { replace: true });
+  const login = async (email: string, password: string) => {
+    console.log("Tentando logar com", email);
+    // Adicione a lógica de autenticação aqui
   };
 
-  const signOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const logout = () => {
+    console.log("Deslogando...");
     setUser(null);
-    navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, loading }}>
-      {!loading && children}
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
 
+// 🚀 Correção: Garanta que `useAuth` esteja sendo exportado corretamente
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
+  if (!context) {
+    throw new Error("useAuth deve ser usado dentro de um AuthProvider");
+  }
   return context;
 };
