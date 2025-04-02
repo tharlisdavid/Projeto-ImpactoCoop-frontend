@@ -40,23 +40,26 @@ const Login = () => {
       >
         <Box
           component="img"
-          src="src/assets/InternationalCooperation.gif" // Substitua pelo caminho da sua imagem
+          src="src/assets/InternationalCooperation.gif"
           alt="Login"
           sx={{
-            maxWidth: "400px",
+            maxWidth: "440px",
             width: "100%",
             height: "auto",
-            display: { xs: "none", md: "block" }, // Oculta em telas pequenas
+            display: { xs: "block", md: "block" },
+            mx: "auto",
+            my: { xs: 2, md: 0 },
+            maxHeight: { xs: "300px", md: "none" }
           }}
         />
         {/* Formulário */}
         <Box
           sx={{
-            maxWidth: "400px",
+            maxWidth: "380px",
             width: "100%",
           }}
         >
-          <Typography variant="h4" align="center" gutterBottom sx={{marginBottom:'20px', fontWeight: 'Bold', fontSize: '44px'}}>
+          <Typography variant="h4" align="center" gutterBottom sx={{ marginBottom: '20px', fontWeight: 'Bold', fontSize: '44px' }}>
             Bem Vindo
           </Typography>
           {error && (
